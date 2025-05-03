@@ -4,20 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Management Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
-<body class="bg-white font-inter">
-    <div class="container">
-        <div class="card">
+<body class="bg-gray-50 font-inter">
+    <!-- Main Page -->
+    <div class="full-page" id="main-page">
+        <div class="content">
             <h1 class="title">Test Management Center</h1>
-            <div class="button-group">
-                <a href="https://akhil10106.github.io/TMC-Home-new/" class="btn">Exam Administrator</a>
-                <a href="https://akhil10106.github.io/TMC-TeacherPanel/t_login.html" class="btn">Instructor</a>
-                <a href="https://akhil10106.github.io/TMC-StudentPanel/login.html" class="btn">Student</a>
+            <p class="subtitle">Streamline your exam process with ease.</p>
+            <div class="button-group" id="main-buttons" style="display: none;">
+                <button class="cross-btn" onclick="handleCrossButton('main')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <a href="https://akhil10106.github.io/TMC-Home-new/" class="btn primary">Exam Administrator</a>
+                <a href="https://akhil10106.github.io/TMC-TeacherPanel/t_login.html" class="btn primary">Instructor</a>
+                <a href="https://akhil10106.github.io/TMC-StudentPanel/login.html" class="btn primary">Student</a>
+            </div>
+            <div class="button-group" id="login-button">
+                <button class="btn primary" onclick="showPage('login-page')">Login</button>
             </div>
         </div>
     </div>
+
+    <!-- Login Page -->
+    <div class="full-page" id="login-page" style="display: none;">
+        <div class="content">
+            <button class="cross-btn" onclick="handleCrossButton('login')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2>Login</h2>
+            <p class="subtitle">Access your TMC dashboard.</p>
+            <div class="form-group">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button class="btn primary" onclick="handleLogin()">Login</button>
+                <a href="#" onclick="showPage('register-page')">Don't have an account? Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div class="full-page" id="register-page" style="display: none;">
+        <div class="content">
+            <button class="cross-btn" onclick="handleCrossButton('register')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2>Register</h2>
+            <p class="subtitle">Join TMC to manage exams efficiently.</p>
+            <div class="form-group">
+                <input type="text" id="register-name" placeholder="Full Name" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <input type="text" id="register-org-id" placeholder="Organization ID" required>
+                <button class="btn primary" onclick="handleRegister()">Register</button>
+                <a href="#" onclick="showPage('login-page')">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Page -->
+    <div class="full-page" id="subscription-page" style="display: none;">
+        <div class="content">
+            <button class="cross-btn" onclick="handleCrossButton('subscription')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2>Choose Your Plan</h2>
+            <p class="subtitle">Unlock premium features with a tailored plan.</p>
+            <div class="pricing-toggle">
+                <span>Monthly</span>
+                <label class="switch">
+                    <input type="checkbox" id="pricing-toggle" onchange="togglePricing()">
+                    <span class="slider"></span>
+                </label>
+                <span>Yearly (Save 17%)</span>
+            </div>
+            <div class="pricing-plans">
+                <div class="plan-card">
+                    <h3>Core</h3>
+                    <p class="price monthly">₹1,000<span>/mo</span></p>
+                    <p class="price yearly" style="display: none;">₹10,000<span>/yr</span></p>
+                    <ul>
+                        <li>Basic exam management</li>
+                        <li>Up to 50 students</li>
+                        <li>Email support</li>
+                    </ul>
+                    <button class="btn primary" onclick="selectPlan('core')">Select Plan</button>
+                </div>
+                <div class="plan-card popular">
+                    <span class="popular-badge">Most Popular</span>
+                    <h3>Pro</h3>
+                    <p class="price monthly">₹3,000<span>/mo</span></p>
+                    <p class="price yearly" style="display: none;">₹30,000<span>/yr</span></p>
+                    <ul>
+                        <li>Advanced exam tools</li>
+                        <li>Up to 200 students</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="btn primary" onclick="selectPlan('pro')">Select Plan</button>
+                </div>
+                <div class="plan-card">
+                    <h3>Elite</h3>
+                    <p class="price monthly">₹5,000<span>/mo</span></p>
+                    <p class="price yearly" style="display: none;">₹50,000<span>/yr</span></p>
+                    <ul>
+                        <li>Full feature access</li>
+                        <li>Unlimited students</li>
+                        <li>24/7 premium support</li>
+                    </ul>
+                    <button class="btn primary" onclick="selectPlan('elite')">Select Plan</button>
+                </div>
+            </div>
+            <button class="btn secondary" onclick="showPage('trial-page')">Try Free for 24 Hours</button>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div class="full-page" id="payment-page" style="display: none;">
+        <div class="content payment-content">
+            <button class="cross-btn" onclick="handleCrossButton('payment')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2>Complete Your Payment</h2>
+            <p class="subtitle">Finalize your subscription to start using TMC.</p>
+            <div class="payment-layout">
+                <div class="plan-details">
+                    <h3 id="plan-name"></h3>
+                    <p id="plan-price"></p>
+                    <p id="plan-period"></p>
+                    <ul id="plan-features"></ul>
+                </div>
+                <div class="payment-actions">
+                    <p>Scan the QR code to pay via GPay:</p>
+                    <img src="https://photos.fife.usercontent.google.com/pw/AP1GczMx3BXKYUDSFkTMmVKejzbT3OSm-hN8gXPfpqqtzkP4wnFn1_XxHL7_-g=w634-h880-s-no-gm?authuser=1" class="qr-code" alt="GPay QR Code">
+                    <input type="text" id="unique-id" placeholder="Enter Unique ID after Payment" required>
+                    <button class="btn primary" onclick="submitUniqueId()">Verify Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trial Page -->
+    <div class="full-page" id="trial-page" style="display: none;">
+        <div class="content">
+            <button class="cross-btn" onclick="handleCrossButton('trial')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2>Start Free Trial</h2>
+            <p class="subtitle">Explore TMC for 24 hours, free.</p>
+            <div class="form-group">
+                <button class="btn primary" onclick="confirmTrial()">Confirm</button>
+                <a href="#" onclick="showPage('subscription-page')">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Compatibility Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
